@@ -105,4 +105,5 @@ HAVING SUM(UNIDADES_FACTURADAS)/SUM(UNIDADES_ORDENADAS) != 1
 ORDER BY T.MES, FILL_RATE ASC;
 
 
--- 
+-- ¿Cuál es el producto con promoción que más se ordena por cada región?
+
