@@ -77,4 +77,32 @@ GROUP BY EST_ESTADO.NOMBRE
 ORDER BY EST_ESTADO.NOMBRE DESC
 FETCH NEXT 2 ROWS ONLY;
 
+-- ¿Cuál es la presentación que tuvo mayor número de faltantes por mes (mostrar el nombre del mes)?
 
+SELECT 
+    Case T.MES
+    WHEN 1 THEN 'Enero'
+    WHEN 2 THEN 'Febrero'
+    WHEN 3 THEN 'Marzo'
+    WHEN 4 THEN 'Abril'
+    WHEN 5 THEN 'Mayo'
+    WHEN 6 THEN 'Junio'
+    WHEN 7 THEN 'Julio'
+    WHEN 8 THEN 'Agosto'
+    WHEN 9 THEN 'Septiembre'
+    WHEN 10 THEN 'Octubre'
+    WHEN 11 THEN 'Noviembre'
+    WHEN 12 THEN 'Diciembre'
+    END, 
+    P.PRESENTACION,  
+    ROUND(SUM(UNIDADES_FACTURADAS)/SUM(UNIDADES_ORDENADAS)*100,2) AS FILL_RATE
+FROM EST_ORDENES O, EST_PRODUCTO P, EST_TIEMPO T
+WHERE 
+    O.ID_PRODUCTO = P.ID_PRODUCTO AND 
+    O.ID_TIEMPO = T.ID_TIEMPO
+GROUP BY T.MES, P.PRESENTACION
+HAVING SUM(UNIDADES_FACTURADAS)/SUM(UNIDADES_ORDENADAS) != 1
+ORDER BY T.MES, FILL_RATE ASC;
+
+
+-- 
